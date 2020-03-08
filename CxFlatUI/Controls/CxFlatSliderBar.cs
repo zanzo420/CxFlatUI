@@ -37,8 +37,12 @@ namespace CxFlatUI
             get { return _minValue; }
             set
             {
-                if (value > _maxValue || value > _value) return;
+                if (value > _maxValue) return;
                 _minValue = value;
+                if (_value < MinValue)
+                {
+                    _value = MinValue;
+                }
                 Invalidate();
             }
         }
@@ -82,7 +86,7 @@ namespace CxFlatUI
 
         private int ValueWidth
         {
-            get { return Convert.ToInt32(_value * (Width - 30) / (_maxValue - _minValue)); }
+            get { return Convert.ToInt32((_value - _minValue) * (Width - 30) / (_maxValue - _minValue)); }
         }
 
         #endregion
@@ -136,9 +140,9 @@ namespace CxFlatUI
                 graphics.FillEllipse(new SolidBrush(_themeColor), new RectangleF(ValueWidth - 2 + 5, 1, 18, 18));
                 graphics.FillPolygon(new SolidBrush(_themeColor), new PointF[]
                 {
-            new PointF(ValueWidth+1.305F-2+5,13.5F+1),
-            new PointF(ValueWidth+7.794F+9-2+5,13.5F+1),
-            new PointF(ValueWidth+9-2+5,28F)
+                    new PointF(ValueWidth+1.305F-2+5,13.5F+1),
+                    new PointF(ValueWidth+7.794F+9-2+5,13.5F+1),
+                    new PointF(ValueWidth+9-2+5,28F)
                 });
                 graphics.DrawString(_value.ToString(), Font, new SolidBrush(Color.White), new RectangleF(ValueWidth - 2 + 5, 2, 18, 18), StringAlign.Center);
             }

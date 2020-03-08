@@ -7,7 +7,7 @@ using System.Windows.Forms;
 
 namespace CxFlatUI
 {
-    public class CxFlatNumericUpDown:Control
+    public class CxFlatNumericUpDown : Control
     {
         /// <summary>
         /// 控件风格
@@ -34,15 +34,15 @@ namespace CxFlatUI
             set
             {
                 _style = value;
-                if(_style== NumericStyle.LeftRight)
+                if (_style == NumericStyle.LeftRight)
                 {
                     downRectangleF = new RectangleF(0, 0, Height, Height);
                     upRectangleF = new RectangleF(Width - Height, 0, Height, Height);
                 }
                 else
                 {
-                    downRectangleF = new RectangleF(Width-Height, Height/2, Height, Height/2);
-                    upRectangleF = new RectangleF(Width - Height, 0, Height, Height/2);
+                    downRectangleF = new RectangleF(Width - Height, Height / 2, Height, Height / 2);
+                    upRectangleF = new RectangleF(Width - Height, 0, Height, Height / 2);
                 }
                 Invalidate();
             }
@@ -137,7 +137,7 @@ namespace CxFlatUI
             {
                 ValueNumber += Step;
             }
-            if(downRectangleF.Contains(mousePoint))
+            if (downRectangleF.Contains(mousePoint))
             {
                 ValueNumber -= Step;
             }
@@ -171,9 +171,9 @@ namespace CxFlatUI
                     graphics.DrawLine(new Pen(ThemeColors.PlaceholderText, 0.5f), textBox.Location.X - 0.5f, 1, textBox.Location.X - 0.5f, Height - 1);
                     break;
                 case NumericStyle.TopDown:
-                    textBox.Size = new Size(Width - Height-2, Height - 2);
+                    textBox.Size = new Size(Width - Height - 2, Height - 2);
                     textBox.Location = new Point(2, 5);
-                    graphics.DrawLine(new Pen(ThemeColors.PlaceholderText, 0.5f), textBox.Location.X + textBox.Width + 0.5f, Height/2, Width - 1, Height/2);
+                    graphics.DrawLine(new Pen(ThemeColors.PlaceholderText, 0.5f), textBox.Location.X + textBox.Width + 0.5f, Height / 2, Width - 1, Height / 2);
                     break;
             }
             graphics.DrawString("+", new Font("Segoe UI", 14f), new SolidBrush((upRectangleF.Contains(mousePoint) && enterFlag) ? ThemeColors.PrimaryColor : ThemeColors.SecondaryText), upRectangleF, StringAlign.Center);
@@ -192,25 +192,33 @@ namespace CxFlatUI
             Width = 120;
             Height = 30;
             Style = NumericStyle.LeftRight;
-            
+
             #region textBox
             textBox.BorderStyle = BorderStyle.None;
             textBox.TextAlign = HorizontalAlignment.Center;
             textBox.Font = new Font("微软雅黑", 12F);
             textBox.KeyPress += TextBox_KeyPress;
+            textBox.TextChanged += TextBox_TextChanged;
             #endregion
         }
-
         private void TextBox_KeyPress(object sender, KeyPressEventArgs e)
         {
-            if(e.KeyChar==13)
+            if (e.KeyChar == 13)
             {
                 float f;
-                if(float.TryParse(textBox.Text,out f))
+                if (float.TryParse(textBox.Text, out f))
                 {
                     ValueNumber = f;
                 }
                 base.Focus();
+            }
+        }
+        private void TextBox_TextChanged(object sender, EventArgs e)
+        {
+            float f;
+            if (float.TryParse(textBox.Text, out f))
+            {
+                ValueNumber = f;
             }
         }
     }

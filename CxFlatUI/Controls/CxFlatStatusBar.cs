@@ -69,6 +69,7 @@ namespace CxFlatUI
                 return ParentForm.ControlBox;
             }
         }
+
         #endregion
 
         #region 事件
@@ -124,7 +125,8 @@ namespace CxFlatUI
             }
             if (closeRectangle.Contains(mousePoint))
             {
-                Environment.Exit(0);
+                ParentForm.Close();
+                //Environment.Exit(0);
             }
         }
 

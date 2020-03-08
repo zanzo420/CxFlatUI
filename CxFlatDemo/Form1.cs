@@ -72,5 +72,10 @@ namespace CxFlatDemo
         {
             label1.Text = cxFlatDatePicker1.Date.ToLongDateString();
         }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            cxFlatSliderBar1.Value = 66;
+        }
     }
 }
